@@ -1,0 +1,90 @@
+{
+  "base": "base.mp4",
+  "notes": "Synthetic testsrc2 clips, committed for a stable end-to-end matching gate. Regenerate with tools/build_matching_fixtures.py.",
+  "clips": [
+    {
+      "file": "base.mp4",
+      "content_family": "base",
+      "transform": "reference",
+      "expected_vs_base": "REFERENCE"
+    },
+    {
+      "file": "copy.mp4",
+      "content_family": "base",
+      "transform": "byte_copy",
+      "expected_vs_base": "EXACT"
+    },
+    {
+      "file": "remux.mkv",
+      "content_family": "base",
+      "transform": "remux",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "reencode.mp4",
+      "content_family": "base",
+      "transform": "reencode",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "resize.mp4",
+      "content_family": "base",
+      "transform": "resize",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "brightness.mp4",
+      "content_family": "base",
+      "transform": "brightness",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "trim_head.mp4",
+      "content_family": "base",
+      "transform": "trim_head",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "trim_tail.mp4",
+      "content_family": "base",
+      "transform": "trim_tail",
+      "expected_vs_base": "VERY_LIKELY"
+    },
+    {
+      "file": "letterbox.mp4",
+      "content_family": "base",
+      "transform": "letterbox",
+      "expected_vs_base": "POSSIBLE"
+    },
+    {
+      "file": "watermark.mp4",
+      "content_family": "base",
+      "transform": "watermark",
+      "expected_vs_base": "POSSIBLE"
+    },
+    {
+      "file": "segment.mp4",
+      "content_family": "base",
+      "transform": "middle_segment",
+      "expected_vs_base": "NEGATIVE"
+    },
+    {
+      "file": "neg_mandelbrot.mp4",
+      "content_family": "negative",
+      "transform": "mandelbrot",
+      "expected_vs_base": "NEGATIVE"
+    },
+    {
+      "file": "neg_bars.mp4",
+      "content_family": "negative",
+      "transform": "smptebars",
+      "expected_vs_base": "NEGATIVE"
+    },
+    {
+      "file": "neg_noise.mp4",
+      "content_family": "negative",
+      "transform": "cellauto",
+      "expected_vs_base": "NEGATIVE"
+    }
+  ]
+}

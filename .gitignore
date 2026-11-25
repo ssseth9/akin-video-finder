@@ -1,0 +1,145 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+!packaging/akin-video-finder.spec
+!packaging/akin-video-finder-gui.spec
+
+# Build/ test logs written by the packaging and verification scripts
+build.out
+build.err
+pytest.out
+pytest.err
+pytest.xml
+mypy.out
+mypy.err
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+*.db
+*.db-shm
+*.db-wal
+*.db.bak-*
+*.log
+logs/
+reports/
+temp/
+test-data/
+
+# Keep example config but ignore user config
+config.toml
+test_config.toml
+full_config.toml
+
+# Local test media (not part of the repository)
+_video/
+eval_corpus/
+full_scan.log
+
+# Exported dismissed-pair labels contain real collection paths
+dismissed_labels*.json
+curated_labels*.json
+eval_*.log
+eval_*.err
+eval_*.db
+eval_*.db-*
+
+# Eval staging dir holds copied media for un-linkable volumes
+.eval_stage/
+
+# Generated code-review diff dumps
+review_packet.txt
+review_bundle.diff
+
+# One-off measurement scripts and their logs. They name real files and
+# paths from the collection, so they stay local like the label exports.
+tmp_*
+
+# Built installers are release assets, not repository content
+# (docs/release-process.md). A 66 MB installer once lived here.
+installer/*.exe
+
+# Agent tooling state. context/ is the tracked "why" layer; these are not.
+.claude/
+/CLAUDE.md
+
+# IDE (Windows)
+.vs/
+
+# Windows device artifact
+nul
+.cortex/
+
+# Local data. The databases, label exports, backups and report exports all
+# name real collection paths, and no code reads this directory.
+/data/
+
+# Agent session plans. Durable config under .kilo/ (commands, agents,
+# kilo.json) stays committable, unlike .claude/.
+/.kilo/plans/
+
+# GUI test screenshots capture the local Windows profile path in folder rows.
+/docs/261119_testing/screenshots/
+/docs/*_testing/screenshots/
+
+# Parking lot for the 2026-11-19 root reorganisation; emptied once the move
+# is committed.
+/_trash_2026-11-19/

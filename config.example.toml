@@ -1,0 +1,140 @@
+# Akin Video Finder Configuration
+# This file controls how the application scans and processes video files.
+
+# Top-level settings first, then the [[roots]] table at the end of this file.
+# TOML has no way back to the root table after a header, so anything written
+# below a [[roots]] block belongs to that folder rather than to the app.
+
+# Video file extensions to include. Case-insensitive.
+# Add or remove extensions as needed. `.ts` and `.mts` are left out by
+# default: those suffixes are as common in TypeScript sources as in MPEG
+# transport streams, so a scanned downloads folder spends its probes on
+# `.d.ts` files. Add them back if you really hold transport streams — the
+# scanner still skips `*.d.ts`/`*.d.mts`/`*.d.cts`.
+video_extensions = [
+    ".mp4",
+    ".mkv",
+    ".avi",
+    ".mov",
+    ".webm",
+    ".m4v",
+    ".mpg",
+    ".mpeg",
+    ".m2ts",
+    ".wmv",
+    ".flv",
+]
+
+# Optional glob patterns to include. Files matching these patterns are included
+# even if they don't match the default extension list.
+# include_patterns = [
+#     "*.custom",
+# ]
+
+# Optional glob patterns to exclude. Files matching these patterns are skipped
+# even if they match the extension list. A pattern matching a directory name
+# (e.g. "_AI") skips that directory and its entire subtree.
+# exclude_patterns = [
+#     "*_sample.*",
+#     "*_trailer.*",
+#     "_AI",
+# ]
+
+# Whether to follow symbolic links and junctions. Default is false for safety.
+follow_symlinks = false
+
+# Whether to scan hidden and system entries. Default is false: dot-folders,
+# Windows hidden/system items, and $RECYCLE.BIN / System Volume Information
+# are skipped. A root you add explicitly is always scanned.
+include_hidden = false
+
+# Logging configuration
+[logging]
+level = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+# file = "akin_video_finder.log"  # Optional: log to file in addition to console
+
+# FFprobe configuration
+[ffprobe]
+executable_path = "ffprobe"  # Path to ffprobe executable
+timeout_seconds = 60        # Maximum time to wait for ffprobe per file
+worker_count = 2            # Number of concurrent ffprobe processes
+max_stderr_bytes = 8192     # Maximum stderr to capture per file
+
+# Database configuration
+[database]
+path = "akin_video_finder.db"  # SQLite database file path
+
+# Reporting configuration
+[reporting]
+output_directory = "reports"  # Directory for exported reports
+
+# Perceptual matching configuration (Milestone 2)
+[matching]
+enabled = true                # Set to false to skip perceptual matching
+ffmpeg_path = "ffmpeg"        # Path to ffmpeg executable
+frame_timeout_seconds = 30    # Timeout per frame extraction
+frame_width = 16              # Normalized frame width for fingerprints
+frame_height = 16             # Normalized frame height for fingerprints
+min_frames = 8                # Minimum frames sampled per video
+max_frames = 96               # Maximum frames sampled per video
+target_frame_interval_seconds = 30.0  # Roughly one frame per N seconds
+duration_tolerance_ratio = 0.02       # Candidate gate: relative duration slack
+duration_tolerance_seconds = 5.0      # Candidate gate: absolute duration slack
+# A pair is not compared at all when the shorter copy is under this fraction
+# of the longer one (0-1]. A clip inside a compilation is not a duplicate of
+# it: on the reference library 0.5 dropped 51.6% of the comparisons and kept
+# 5 of the 39 pairs a reviewer could act on. 0.88 dropped 89.6% and kept none
+# of them, so lower this to compare more length-different pairs; 1.0 compares
+# only copies whose durations agree exactly.
+min_duration_ratio = 0.88
+frame_match_max_distance = 0.10       # Normalized mean pixel difference per frame
+very_likely_threshold = 0.9   # Matching-frame fraction for VERY_LIKELY
+very_likely_mean_distance = 0.09  # Mean pixel distance bound for strong evidence
+possible_threshold = 0.7      # Matching-frame fraction for POSSIBLE
+possible_min_matched_frames = 6  # Min strongly-matched frames for POSSIBLE (partial overlap)
+signature_frames = 8            # Sparse frames hashed per file for candidate blocking
+signature_min_shared_frames = 2 # Sparse frames that must match for a pair to be compared
+signature_max_bucket_files = 200  # Skip uninformative hash slices larger than this
+signature_min_band_hits = 1       # Shared 16-bit band keys required before pair verification
+# Dense hashes of each file's opening window, sampled by the second rather than
+# by fraction of each file's length. This is what finds a copy sitting behind a
+# prepended advert: a file that starts 20s late still shares its first minutes.
+head_bag_enabled = true           # Build that index during a scan
+head_bag_seconds = 90.0           # Seconds decoded from each file's start
+head_bag_fps = 1.0                # Samples per second over that window
+head_bag_min_shared = 24          # Shared 16-bit hash bands (4 per frame) before a shift is probed
+signature_max_hamming = 10        # Max bit distance for shared signature frames
+signature_workers = 4             # Concurrent ffmpeg processes for signatures
+crop_detect = true                # Remove letterbox/pillarbox bars before hashing frames
+trim_short_coverage_min = 0.8 # >=80% of the shorter video must match
+trim_long_coverage_min = 0.7  # Shared span must cover >=70% of the longer video
+
+# Which copy of a duplicate pair to recommend keeping.
+[keeper]
+# Extensions that win a tie, e.g. [".mkv", ".mp4"]
+preferred_extensions = []
+# Path substrings that win a tie, e.g. ["archive"]
+preferred_path_keywords = []
+# Quality "stops" (log2 units) charged for each 1% a copy is shorter than its
+# pair. Quality comes from bitrate, pixels, codec and audio, so the default 0.5
+# lets a copy with twice the bitrate and four times the pixels run about 5%
+# shorter and still be recommended; a higher value prefers longer copies, and
+# 0 makes length matter only as a tiebreak.
+length_penalty_per_percent = 0.5
+
+# Folders that may be scanned but must never be moved or deleted.
+[actions]
+# Absolute paths. A whole drive is protected by listing its root.
+protected_paths = []
+
+# Source folders to scan. Each root can be on a different drive letter.
+# recursive: true to scan subdirectories, false to scan only the root directory.
+# Add folders on the Scan tab; they are written here as [[roots]] blocks.
+#
+# [[roots]]
+# path = "D:/Videos"
+# recursive = true
+#
+# [[roots]]
+# path = "E:/Media"
+# recursive = true
