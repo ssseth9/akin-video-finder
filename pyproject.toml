@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "akin-video-finder"
-version = "0.3.0"
+version = "0.3.1"
 description = "A Windows-native tool for finding duplicate videos with exact and perceptual matching"
 readme = "README.md"
 requires-python = ">=3.12"

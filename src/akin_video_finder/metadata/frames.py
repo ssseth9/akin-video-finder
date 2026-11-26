@@ -443,8 +443,6 @@ def extract_gray_frame(
         ffmpeg_path,
         "-v",
         "error",
-        "-thread_queue_size",
-        "64",
         "-ss",
         f"{timestamp_seconds:.3f}",
         "-i",
@@ -520,10 +518,7 @@ def extract_gray_frames(
     def _extract_batch(ts_slice: list[float], base: int) -> int:
         args = [ffmpeg_path, "-v", "error", "-y"]
         for t in ts_slice:
-            # Bound the input packet queue: a seek past real EOF (bogus
-            # container duration) makes ffmpeg read the file linearly
-            # while packets pile up — unbounded queues reached >10GB
-            args += ["-thread_queue_size", "64", "-ss", f"{t:.3f}", "-i", str(file_path)]
+            args += ["-ss", f"{t:.3f}", "-i", str(file_path)]
         parts = ";".join(f"[{i}:v]{vf},select=eq(n\\,0)[f{i}]" for i in range(len(ts_slice)))
         args += ["-filter_complex", parts]
         # The flat timeout is only a floor — a slice of N inputs on a

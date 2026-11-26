@@ -105,10 +105,6 @@ def generate_contact_sheet(
                 # matching never uses these frames.
                 "-skip_frame",
                 "nokey",
-                # Bound the input packet queue: a dead seek buffers
-                # gigabytes of linear reads otherwise
-                "-thread_queue_size",
-                "64",
                 "-ss",
                 f"{position:.3f}",
                 "-i",

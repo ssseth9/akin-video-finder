@@ -6,7 +6,7 @@
 ; packaging\bin\ at PyInstaller build time — nothing extra to install.
 
 #define AppName "Akin Video Finder"
-#define AppVersion "0.3.0"
+#define AppVersion "0.3.1"
 #define AppPublisher "Akin Video Finder Contributors"
 
 [Setup]
