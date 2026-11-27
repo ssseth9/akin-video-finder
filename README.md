@@ -6,6 +6,23 @@
 
 Akin Video Finder compares content, not just filenames. It detects exact copies and videos that show the same scenes despite different codecs, bitrates, resolutions, or start/end cuts. You get clear match reasons, side-by-side previews, quality recommendations, and full control over every keep/remove decision. Nothing is deleted until you confirm.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/results.png" alt="Results tab with exact and very likely duplicate pairs" width="100%">
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/scan.png" alt="Scan tab with folders and match settings"></td>
+    <td width="50%"><img src="docs/screenshots/compare.png" alt="Side-by-side pair comparison with match evidence"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/scan-log.png" alt="Scan log from a completed run"></td>
+    <td width="50%"><img src="docs/screenshots/tools.png" alt="Tools tab with reports, ignored pairs, and cleanup"></td>
+  </tr>
+</table>
+
 ## Highlights
 
 - **Exact + perceptual matching** - Identical videos and re-encoded / resized / slightly trimmed versions
